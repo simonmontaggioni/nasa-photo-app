@@ -27,27 +27,27 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className={inter.className}
+        style={{
+          backgroundImage: "url(/background_2.webp)",
+          backgroundSize: "cover",
+        }}
+      >
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static">
+          <AppBar
+            position="sticky"
+            color="transparent"
+            sx={{ backgroundColor: "rgba(255,255,255,.25)" }}
+          >
             <Toolbar variant="dense">
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" color="inherit" component="div">
+              <Typography variant="h6" color="white" component="div">
                 NASA Photo App
               </Typography>
             </Toolbar>
           </AppBar>
         </Box>
-        <Grid container style={{ marginTop: "5px" }}>
-          {children}
-        </Grid>
+        <Grid container>{children}</Grid>
       </body>
     </html>
   );
