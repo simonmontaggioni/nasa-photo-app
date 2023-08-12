@@ -12,6 +12,7 @@ import CameraSelect from "./CameraSelect";
 import DateTypeSelect from "./DateTypeSelect";
 import EarthCalendar from "./EarthCalendar";
 import MartianCalendar from "./MartianCalendar";
+import { RequestPhotosParams, RoverName } from "../interfaces/mainInterfaces";
 
 const RoverFormStyles = {
   paper: {
@@ -24,7 +25,6 @@ const RoverFormStyles = {
     margin: "0 1em",
     display: "flex",
     justifyContent: "center",
-    // width: "fit-content",
   },
   selectsContainer: {
     display: "flex",
@@ -34,10 +34,15 @@ const RoverFormStyles = {
 };
 
 interface RoverFormProps {
+  loading: boolean;
   showRoverForm: boolean;
-  setShowRoverForm: React.Dispatch<React.SetStateAction<boolean>>;
+  requestPhotos: (requestPhotosParams: RequestPhotosParams) => void;
 }
-const RoverForm: FC<RoverFormProps> = ({ showRoverForm, setShowRoverForm }) => {
+const RoverForm: FC<RoverFormProps> = ({
+  loading,
+  showRoverForm,
+  requestPhotos,
+}) => {
   const [selectedRover, setSelectedRover] = useState(ROVERS[0].name);
   const [camera, setCamera] = useState(
     ROVERS.filter((rover) => rover.name === selectedRover)[0].cameras[0].name
@@ -45,9 +50,15 @@ const RoverForm: FC<RoverFormProps> = ({ showRoverForm, setShowRoverForm }) => {
   const [dateType, setDateType] = useState<"earth" | "sol">("earth");
   const [earthDate, setEarthDate] = useState<Dayjs | null>(dayjs());
   const [martianSol, setMartianSol] = useState<number>(0);
-  const [loading, setLoading] = useState(false);
 
   const mediaSize = useGetMediaSize();
+
+  const handleChangeSelectedRover = (newRover: RoverName) => {
+    setSelectedRover(newRover);
+    setCamera(
+      ROVERS.filter((rover) => rover.name === newRover)[0].cameras[0].name
+    );
+  };
 
   const opacityValue = showRoverForm ? 1 : 0;
   const zIndexValue = showRoverForm ? 1 : 0;
@@ -63,9 +74,9 @@ const RoverForm: FC<RoverFormProps> = ({ showRoverForm, setShowRoverForm }) => {
     >
       <Grid container sx={{ width: "100%" }}>
         <RoverSelect
-          rovers={ROVERS}
+          rovers={ROVERS.filter((rover) => rover.name !== "Perseverance")}
           selectedRover={selectedRover}
-          setSelectedRover={setSelectedRover}
+          setSelectedRover={handleChangeSelectedRover}
         />
         <Grid container item xs={12} sx={{ justifyContent: "space-between" }}>
           {["sm2", "md", "lg", "xl"].includes(mediaSize) && (
@@ -107,7 +118,15 @@ const RoverForm: FC<RoverFormProps> = ({ showRoverForm, setShowRoverForm }) => {
                   <SendIcon />
                 )
               }
-              onClick={() => setShowRoverForm(!showRoverForm)}
+              onClick={() =>
+                requestPhotos({
+                  rover: selectedRover,
+                  camera,
+                  dateType: dateType,
+                  date: dateType === "earth" ? earthDate : martianSol,
+                  page: 1,
+                })
+              }
             >
               {loading ? "loading" : "search"}
             </Button>

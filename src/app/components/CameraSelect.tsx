@@ -1,12 +1,12 @@
 import React, { FC } from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import { Camera, Rover } from "../interfaces/mainInterfaces";
+import { Camera, CameraName, Rover } from "../interfaces/mainInterfaces";
 
 interface CameraSelectProps {
   rovers: Rover[];
   selectedRover: string;
-  camera: string;
-  setCamera: React.Dispatch<React.SetStateAction<string>>;
+  camera: CameraName;
+  setCamera: React.Dispatch<React.SetStateAction<CameraName>>;
 }
 
 const CameraSelect: FC<CameraSelectProps> = ({
@@ -23,7 +23,7 @@ const CameraSelect: FC<CameraSelectProps> = ({
         id="camera-select"
         value={camera}
         label="camera"
-        onChange={(e) => setCamera(e.target.value)}
+        onChange={(e) => setCamera(e.target.value as CameraName)}
       >
         {rovers
           .filter((rover: Rover) => rover.name === selectedRover)[0]

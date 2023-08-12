@@ -7,7 +7,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { Rover } from "../interfaces/mainInterfaces";
+import { Rover, RoverName } from "../interfaces/mainInterfaces";
 
 const RoverSelectStyles = {
   container: { display: "flex", alignItems: "center" },
@@ -17,8 +17,8 @@ const RoverSelectStyles = {
 
 interface RoverSelectProps {
   rovers: Rover[];
-  selectedRover: string;
-  setSelectedRover: React.Dispatch<React.SetStateAction<string>>;
+  selectedRover: RoverName;
+  setSelectedRover: (newRover: RoverName) => void;
 }
 const RoverSelect: FC<RoverSelectProps> = ({
   rovers,
@@ -34,7 +34,7 @@ const RoverSelect: FC<RoverSelectProps> = ({
           id="rover-select"
           value={selectedRover}
           label="rover"
-          onChange={(e) => setSelectedRover(e.target.value)}
+          onChange={(e) => setSelectedRover(e.target.value as RoverName)}
           fullWidth
         >
           {rovers.map((rover) => (
