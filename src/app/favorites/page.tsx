@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { Button, Stack, Paper, ImageList } from "@mui/material";
-import { useGetMediaSize } from "../hooks/useGetMediaSize";
-import { Photo } from "../interfaces/mainInterfaces";
-import { handleFavorite } from "../utils/handleFavorite";
+import { useGetMediaSize } from "../../hooks/useGetMediaSize";
+import { Photo } from "../../interfaces/mainInterfaces";
+import { handleFavorite } from "../../utils/handleFavorite";
 import styles from "./page.module.css";
 import Link from "next/link";
-import PhotoCard from "../components/PhotoCard";
+import PhotoCard from "../../components/PhotoCard";
 
 const COLUMS_BY_MEDIASIZE = {
   xs: 2,

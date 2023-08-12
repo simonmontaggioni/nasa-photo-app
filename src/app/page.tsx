@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
-import RoverForm from "./components/RoverForm";
-import PhotoGallery from "./components/PhotoGallery";
+import RoverForm from "../components/RoverForm";
+import PhotoGallery from "../components/PhotoGallery";
 import { NextPage } from "next";
 import {
   ErrorMessage,
   Photo,
   RequestPhotosParams,
-} from "./interfaces/mainInterfaces";
+} from "../interfaces/mainInterfaces";
 import { Alert, Snackbar } from "@mui/material";
 import styles from "./page.module.css";
 

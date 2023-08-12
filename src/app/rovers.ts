@@ -1,4 +1,4 @@
-import { Rover } from "./interfaces/mainInterfaces";
+import { Rover } from "../interfaces/mainInterfaces";
 
 export const ROVERS: Rover[] = [
   {

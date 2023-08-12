@@ -3,8 +3,7 @@ import { Grid, Button, Stack, Paper, CircularProgress } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 import dayjs, { Dayjs } from "dayjs";
-import styles from "../page.module.css";
-import { ROVERS } from "../rovers";
+import { ROVERS } from "../app/rovers";
 import { useGetMediaSize } from "../hooks/useGetMediaSize";
 import RoverSelect from "./RoverSelect";
 import RoverImageContainer from "./RoverImageContainer";
@@ -13,6 +12,8 @@ import DateTypeSelect from "./DateTypeSelect";
 import EarthCalendar from "./EarthCalendar";
 import MartianCalendar from "./MartianCalendar";
 import { RequestPhotosParams, RoverName } from "../interfaces/mainInterfaces";
+import { useRouter } from "next/router";
+import styles from "../app/page.module.css";
 
 const RoverFormStyles = {
   paper: {
@@ -62,6 +63,7 @@ const RoverForm: FC<RoverFormProps> = ({
 
   const opacityValue = showRoverForm ? 1 : 0;
   const zIndexValue = showRoverForm ? 1 : 0;
+
   return (
     <Paper
       elevation={4}
@@ -98,7 +100,11 @@ const RoverForm: FC<RoverFormProps> = ({
                 setCamera={setCamera}
                 disabled={loading}
               />
-              <DateTypeSelect dateType={dateType} setDateType={setDateType} />
+              <DateTypeSelect
+                dateType={dateType}
+                setDateType={setDateType}
+                disabled={loading}
+              />
               {dateType === "earth" ? (
                 <EarthCalendar
                   earthDate={earthDate}

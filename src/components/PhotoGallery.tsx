@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Button, Stack, Paper, ImageList } from "@mui/material";
-import styles from "../page.module.css";
 import { useGetMediaSize } from "../hooks/useGetMediaSize";
 import { Photo, RequestPhotosParams } from "../interfaces/mainInterfaces";
 import PhotoCard from "./PhotoCard";
+import styles from "../app/page.module.css";
 
 const COLUMS_BY_MEDIASIZE = {
   xs: 2,
