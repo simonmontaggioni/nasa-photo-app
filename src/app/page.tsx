@@ -10,6 +10,7 @@ import {
 } from "../interfaces/mainInterfaces";
 import { Alert, Snackbar } from "@mui/material";
 import styles from "./page.module.css";
+import { requestPhotos } from "@/utils/requestPhotos";
 
 export default function HomePage(): NextPage {
   const [showRoverForm, setShowRoverForm] = useState(true);
@@ -31,25 +32,6 @@ export default function HomePage(): NextPage {
     setOpenSnackBar(false);
   };
 
-  const requestPhotos = async (params: RequestPhotosParams) => {
-    const { rover, camera, dateType, date, page } = params;
-    const searchParams = new URLSearchParams("");
-    searchParams.append("rover", rover);
-    searchParams.append("camera", camera);
-    if (dateType === "earth") {
-      searchParams.append(
-        "earth_date",
-        date?.format("YYYY-MM-DD").toString() ?? ""
-      );
-    } else {
-      searchParams.append("sol", String(date));
-    }
-
-    searchParams.append("page", String(page));
-    const URL = `http://localhost:3000/api/rovers/photos?${searchParams.toString()}`;
-    return fetch(URL);
-  };
-
   const handlePhotoRequestFromForm = async (params: RequestPhotosParams) => {
     setLoading(true);
     const sameParams =
@@ -65,7 +47,6 @@ export default function HomePage(): NextPage {
         setPhotosParams(params);
         setShowRoverForm(!showRoverForm);
       } catch (newError) {
-        console.error("form error", error);
         setError({ message: newError?.message });
         setOpenSnackBar(true);
       }
@@ -89,7 +70,6 @@ export default function HomePage(): NextPage {
         setPhotosData([...photosData, ...photosDataResponse.photos]);
         setPhotosParams(params);
       } catch (newError) {
-        console.error("galery error", error);
         setError({ message: newError?.message });
         setOpenSnackBar(true);
       }
@@ -99,19 +79,21 @@ export default function HomePage(): NextPage {
 
   return (
     <main className={styles.main}>
-      <RoverForm
-        showRoverForm={showRoverForm}
-        requestPhotos={handlePhotoRequestFromForm}
-        loading={loading}
-      ></RoverForm>
-      <PhotoGallery
-        loading={loading}
-        showRoverForm={showRoverForm}
-        setShowRoverForm={setShowRoverForm}
-        photosData={photosData}
-        requestPhotosParams={photosParams}
-        requestPhotos={handlePhotoRequestFromGallery}
-      ></PhotoGallery>
+      {showRoverForm ? (
+        <RoverForm
+          requestPhotos={handlePhotoRequestFromForm}
+          loading={loading}
+        />
+      ) : (
+        <PhotoGallery
+          loading={loading}
+          showRoverForm={showRoverForm}
+          setShowRoverForm={setShowRoverForm}
+          photosData={photosData}
+          requestPhotosParams={photosParams}
+          requestPhotos={handlePhotoRequestFromGallery}
+        />
+      )}
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         open={openSnackBar}

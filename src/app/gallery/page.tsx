@@ -1,9 +1,10 @@
-import { useRouter } from "next/router";
+"use client";
+import { useRouter } from "next/navigation";
 
 const GalleryPage = () => {
   const router = useRouter();
-  const { photosData } = router.query;
-  console.info("photos data", photosData);
+  console.info("router", router);
+  // console.info("photos data", photosData);
 
   return <div>GalleryPage</div>;
 };

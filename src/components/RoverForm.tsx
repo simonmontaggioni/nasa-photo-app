@@ -23,9 +23,7 @@ const RoverFormStyles = {
     padding: "20px",
     backgroundColor: "rgba(255,255,255,.75)",
     backdropFilter: "blur",
-    opacity: 1,
     position: "absolute",
-    zIndex: 1,
     margin: "0 1em",
     display: "flex",
     justifyContent: "center",
@@ -39,14 +37,9 @@ const RoverFormStyles = {
 
 interface RoverFormProps {
   loading: boolean;
-  showRoverForm: boolean;
   requestPhotos: (requestPhotosParams: RequestPhotosParams) => void;
 }
-const RoverForm: FC<RoverFormProps> = ({
-  loading,
-  showRoverForm,
-  requestPhotos,
-}) => {
+const RoverForm: FC<RoverFormProps> = ({ loading, requestPhotos }) => {
   const [selectedRover, setSelectedRover] = useState<Rover>(ROVERS[0]);
   const [camera, setCamera] = useState(ROVERS[0].cameras[0].name);
   const [dateType, setDateType] = useState<"earth" | "sol">("earth");
@@ -56,24 +49,12 @@ const RoverForm: FC<RoverFormProps> = ({
   const mediaSize = useGetMediaSize();
 
   const handleChangeSelectedRover = (newRover: Rover) => {
-    console.info(newRover);
     setSelectedRover(newRover);
     setCamera(newRover.cameras[0].name);
   };
 
-  const opacityValue = showRoverForm ? 1 : 0;
-  const zIndexValue = showRoverForm ? 1 : 0;
-
   return (
-    <Paper
-      elevation={4}
-      sx={{
-        ...RoverFormStyles.paper,
-        opacity: opacityValue,
-        zIndex: zIndexValue,
-      }}
-      className={showRoverForm ? styles.fade_in : styles.fade_out}
-    >
+    <Paper elevation={4} sx={RoverFormStyles.paper} className={styles.fade_in}>
       <Grid container sx={{ width: "100%" }}>
         <RoverSelect
           rovers={ROVERS.filter((rover) => rover.name !== "Perseverance")}
@@ -110,6 +91,7 @@ const RoverForm: FC<RoverFormProps> = ({
                   earthDate={earthDate}
                   setEarthDate={setEarthDate}
                   disabled={loading}
+                  minimalDate={dayjs(selectedRover.landing_date)}
                 />
               ) : (
                 <MartianCalendar

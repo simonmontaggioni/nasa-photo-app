@@ -3,17 +3,19 @@ import { Box } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 interface EarthCalendarProps {
   earthDate: Dayjs | null;
   setEarthDate: React.Dispatch<React.SetStateAction<Dayjs | null>>;
   disabled: boolean;
+  minimalDate: Dayjs;
 }
 const EarthCalendar: FC<EarthCalendarProps> = ({
   earthDate,
   setEarthDate,
   disabled,
+  minimalDate,
 }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -23,6 +25,8 @@ const EarthCalendar: FC<EarthCalendarProps> = ({
           onChange={(newValue) => setEarthDate(newValue)}
           disableFuture
           disabled={disabled}
+          minDate={minimalDate}
+          maxDate={dayjs()}
         />
       </Box>
     </LocalizationProvider>

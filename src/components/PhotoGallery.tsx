@@ -80,19 +80,11 @@ const PhotoGallery: FC<PhotoGalleryProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isIntersecting, loading, requestPhotosParams]);
 
-  const opacityValue = showRoverForm ? 0 : 1;
-  const zIndexValue = showRoverForm ? 0 : 1;
-  const pointerActions = showRoverForm ? "none" : "all";
   return (
     <Paper
       elevation={4}
-      sx={{
-        ...PhotoGalleryStyles.paper,
-        opacity: opacityValue,
-        zIndex: zIndexValue,
-        pointerEvents: pointerActions,
-      }}
-      className={!showRoverForm ? styles.fade_in : styles.fade_out}
+      sx={PhotoGalleryStyles.paper}
+      className={styles.fade_in}
     >
       <ImageList
         cols={COLUMS_BY_MEDIASIZE[mediaSize] || 1}

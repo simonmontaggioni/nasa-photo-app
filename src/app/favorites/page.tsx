@@ -28,7 +28,7 @@ const FavoritePageStyles = {
   imageList: { width: "90vw", height: "75vh", paddingRight: "10px" },
 };
 
-const FavoritePage = () => {
+const FavoritesPage = () => {
   const mediaSize = useGetMediaSize();
 
   return (
@@ -68,4 +68,4 @@ const FavoritePage = () => {
   );
 };
 
-export default FavoritePage;
+export default FavoritesPage;
