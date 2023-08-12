@@ -142,7 +142,7 @@ const PhotoGallery: FC<PhotoGalleryProps> = ({
         direction={
           ["sm", "md", "lg", "xl"].includes(mediaSize) ? "row" : "column"
         }
-        sx={{ justifyContent: "end", paddingTop: "20px", height: "75px" }}
+        sx={{ justifyContent: "end", paddingTop: "20px" }}
       >
         <Button
           variant="contained"

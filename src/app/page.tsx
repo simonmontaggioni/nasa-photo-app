@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import styles from "./page.module.css";
 import RoverForm from "./components/RoverForm";
 import PhotoGallery from "./components/PhotoGallery";
 import { NextPage } from "next";
@@ -10,6 +9,7 @@ import {
   RequestPhotosParams,
 } from "./interfaces/mainInterfaces";
 import { Alert, Snackbar } from "@mui/material";
+import styles from "./page.module.css";
 
 export default function HomePage(): NextPage {
   const [showRoverForm, setShowRoverForm] = useState(true);
@@ -64,9 +64,9 @@ export default function HomePage(): NextPage {
         setPhotosData([...photosDataResponse.photos]);
         setPhotosParams(params);
         setShowRoverForm(!showRoverForm);
-      } catch (error) {
+      } catch (newError) {
         console.error("form error", error);
-        setError(error?.message || "");
+        setError({ message: newError?.message });
         setOpenSnackBar(true);
       }
     } else {
@@ -88,9 +88,9 @@ export default function HomePage(): NextPage {
         // }
         setPhotosData([...photosData, ...photosDataResponse.photos]);
         setPhotosParams(params);
-      } catch (error) {
+      } catch (newError) {
         console.error("galery error", error);
-        setError({ message: error?.message });
+        setError({ message: newError?.message });
         setOpenSnackBar(true);
       }
     }
@@ -126,7 +126,7 @@ export default function HomePage(): NextPage {
             background: "rgba(250,200,200,1)",
           }}
         >
-          {error}
+          {error.message}
         </Alert>
       </Snackbar>
     </main>

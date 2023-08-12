@@ -29,4 +29,16 @@ const toggleFavoriteFromLocalStorage = (photo: Photo): boolean => {
   return isInFavorites(photo);
 };
 
-export const handleFavorite = { toggleFavoriteFromLocalStorage, isInFavorites };
+const getFavorites = (): Photo[] => {
+  let favorites: Photo[] = JSON.parse(
+    localStorage.getItem("nasa_favorites_fotos") || "[]"
+  );
+
+  return favorites;
+};
+
+export const handleFavorite = {
+  toggleFavoriteFromLocalStorage,
+  isInFavorites,
+  getFavorites,
+};

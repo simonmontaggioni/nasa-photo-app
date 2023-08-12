@@ -32,7 +32,6 @@ const PhotoDetails: FC<PhotoDetailsProps> = ({ photo, open, handleClose }) => {
   }, [photo]);
 
   const handleSaveOnFavorites = () => {
-    console.info("save on favorites");
     const result = handleFavorite.toggleFavoriteFromLocalStorage(
       photo as Photo
     );
@@ -73,16 +72,11 @@ const PhotoDetails: FC<PhotoDetailsProps> = ({ photo, open, handleClose }) => {
             autoFocus
           >
             {`${isInFav ? "remove from" : "save on"} favorites`}
-            <IconButton
-              sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-              aria-label={`info about ${photoTitle}`}
-            >
-              {isInFav ? (
-                <DeleteIcon sx={{ color: "black" }} />
-              ) : (
-                <StarIcon sx={{ color: "gold" }} />
-              )}
-            </IconButton>
+            {isInFav ? (
+              <DeleteIcon sx={{ color: "black" }} />
+            ) : (
+              <StarIcon sx={{ color: "gold" }} />
+            )}
           </Button>
           <Button onClick={() => handleClose()} autoFocus>
             Close
