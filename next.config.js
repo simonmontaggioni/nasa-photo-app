@@ -6,13 +6,16 @@ const nextConfig = {
         protocol: "https",
         hostname: "via.placeholder.com",
         port: "",
-        // pathname: '/account123/**',
       },
       {
         protocol: "https",
         hostname: "mars.nasa.gov",
         port: "",
-        // pathname: '/account123/**',
+      },
+      {
+        protocol: "http",
+        hostname: "mars.jpl.nasa.gov",
+        port: "",
       },
     ],
   },

@@ -6,8 +6,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Photo } from "../interfaces/mainInterfaces";
+import { IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import StarIcon from "@mui/icons-material/Star";
+import { handleFavorite } from "../utils/handleFavorite";
 
 const PhotoDetailsStyles = {
   dialogContent: { display: "flex", justifyContent: "center" },
@@ -21,6 +25,19 @@ interface PhotoDetailsProps {
 const PhotoDetails: FC<PhotoDetailsProps> = ({ photo, open, handleClose }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const [isInFav, setIsInFav] = useState(false);
+
+  useEffect(() => {
+    setIsInFav(!!handleFavorite.isInFavorites(photo as Photo));
+  }, [photo]);
+
+  const handleSaveOnFavorites = () => {
+    console.info("save on favorites");
+    const result = handleFavorite.toggleFavoriteFromLocalStorage(
+      photo as Photo
+    );
+    setIsInFav(!!result);
+  };
 
   const imageLoader = ({ src }) => {
     return `${src}`;
@@ -50,6 +67,23 @@ const PhotoDetails: FC<PhotoDetailsProps> = ({ photo, open, handleClose }) => {
           />
         </DialogContent>
         <DialogActions>
+          <Button
+            variant={"outlined"}
+            onClick={() => handleSaveOnFavorites()}
+            autoFocus
+          >
+            {`${isInFav ? "remove from" : "save on"} favorites`}
+            <IconButton
+              sx={{ color: "rgba(255, 255, 255, 0.54)" }}
+              aria-label={`info about ${photoTitle}`}
+            >
+              {isInFav ? (
+                <DeleteIcon sx={{ color: "black" }} />
+              ) : (
+                <StarIcon sx={{ color: "gold" }} />
+              )}
+            </IconButton>
+          </Button>
           <Button onClick={() => handleClose()} autoFocus>
             Close
           </Button>

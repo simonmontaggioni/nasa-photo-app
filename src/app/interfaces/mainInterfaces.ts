@@ -108,3 +108,7 @@ export interface RequestPhotosParams {
   date: Dayjs | null | number;
   page: number;
 }
+
+export interface ErrorMessage {
+  message: string;
+}
