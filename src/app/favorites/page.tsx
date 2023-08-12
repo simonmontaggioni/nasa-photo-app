@@ -1,22 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
-import {
-  Button,
-  Stack,
-  Paper,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar,
-  IconButton,
-} from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
-import PhotoDetails from "../components/PhotoDetail";
+import { Button, Stack, Paper, ImageList } from "@mui/material";
 import { useGetMediaSize } from "../hooks/useGetMediaSize";
 import { Photo } from "../interfaces/mainInterfaces";
 import { handleFavorite } from "../utils/handleFavorite";
 import styles from "./page.module.css";
 import Link from "next/link";
+import PhotoCard from "../components/PhotoCard";
 
 const COLUMS_BY_MEDIASIZE = {
   xs: 2,
@@ -27,74 +17,39 @@ const COLUMS_BY_MEDIASIZE = {
   xl: 5,
 };
 
-const FavoritePage = () => {
-  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
-  const [open, setOpen] = useState(false);
-  const mediaSize = useGetMediaSize();
-  const handleClickOpen = (photo: Photo) => {
-    setOpen(true);
-    setSelectedPhoto(photo);
-  };
+const FavoritePageStyles = {
+  paper: {
+    padding: "10px 20px",
+    marginTop: "40px",
+    backgroundColor: "rgba(255,255,255,.15)",
+    backdropFilter: "blur",
+    margin: "auto",
+  },
+  imageList: { width: "90vw", height: "75vh", paddingRight: "10px" },
+};
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+const FavoritePage = () => {
+  const mediaSize = useGetMediaSize();
 
   return (
     <main className={styles.main}>
       <Paper
         elevation={4}
-        sx={{
-          padding: "10px 20px",
-          marginTop: "40px",
-          backgroundColor: "rgba(255,255,255,.15)",
-          backdropFilter: "blur",
-          margin: "auto",
-        }}
+        sx={FavoritePageStyles.paper}
         className={styles.fade_in}
       >
-        <PhotoDetails
-          open={open}
-          handleClose={handleClose}
-          photo={selectedPhoto}
-        />
         <ImageList
           cols={COLUMS_BY_MEDIASIZE[mediaSize] || 1}
           rowHeight={200}
           gap={20}
-          sx={{ width: "90vw", height: "75vh", paddingRight: "10px" }}
+          sx={FavoritePageStyles.imageList}
         >
-          {handleFavorite.getFavorites().map((photo, index) => {
-            const photoTitle = `${photo?.rover.name} - ${photo?.id}`;
-            return (
-              <ImageListItem key={photo.id}>
-                <Image
-                  src={photo.img_src}
-                  alt={`${photo.id}`}
-                  loading="lazy"
-                  fill
-                  onClick={() => handleClickOpen(photo)}
-                />
-                <ImageListItemBar
-                  title={photoTitle}
-                  subtitle={photo.id}
-                  actionIcon={
-                    <IconButton
-                      sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                      aria-label={`info about ${photoTitle}`}
-                    >
-                      <StarIcon sx={{ color: "gold" }} />
-                    </IconButton>
-                  }
-                />
-              </ImageListItem>
-            );
-          })}
+          {handleFavorite.getFavorites().map((photo: Photo) => (
+            <PhotoCard key={photo.id} photo={photo} />
+          ))}
         </ImageList>
         <Stack
-          direction={
-            ["sm", "md", "lg", "xl"].includes(mediaSize) ? "row" : "column"
-          }
+          direction={"row"}
           sx={{ justifyContent: "end", paddingTop: "20px" }}
         >
           <Link href={"/"}>

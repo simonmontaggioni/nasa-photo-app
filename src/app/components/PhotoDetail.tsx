@@ -6,9 +6,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import { FC, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { Photo } from "../interfaces/mainInterfaces";
-import { IconButton } from "@mui/material";
+import { DialogContentText, Grid } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import StarIcon from "@mui/icons-material/Star";
 import { handleFavorite } from "../utils/handleFavorite";
@@ -19,7 +19,7 @@ const PhotoDetailsStyles = {
 interface PhotoDetailsProps {
   photo: Photo | null;
   open: boolean;
-  handleClose: () => void;
+  handleClose: Dispatch<SetStateAction<boolean>>;
 }
 
 const PhotoDetails: FC<PhotoDetailsProps> = ({ photo, open, handleClose }) => {
@@ -42,28 +42,36 @@ const PhotoDetails: FC<PhotoDetailsProps> = ({ photo, open, handleClose }) => {
     return `${src}`;
   };
 
-  const photoTitle = `Photo ${photo?.id}, captured at ${photo?.earth_date} by ${photo?.rover.name} rover.`;
+  const photoTitle = `Photo - ${photo?.id}`;
+  const photoInfo = `Photo ${photo?.id}, captured at ${photo?.earth_date} in mars exploration by ${photo?.rover.name} rover with the ${photo?.camera.full_name}.`;
   return (
     <div>
       <Dialog
         fullScreen={fullScreen}
         open={open}
-        onClose={() => handleClose()}
+        onClose={() => handleClose(false)}
         aria-labelledby="responsive-dialog-title"
         sx={{ backgroundColor: "trasparent" }}
       >
         <DialogTitle id="responsive-dialog-title">{photoTitle}</DialogTitle>
         <DialogContent sx={PhotoDetailsStyles.dialogContent}>
-          <Image
-            src={photo?.img_src as string}
-            alt={photoTitle}
-            loading="lazy"
-            width={500}
-            height={500}
-            loader={imageLoader}
-            placeholder="blur"
-            blurDataURL="/nasa.svg"
-          />
+          <Grid container sx={{ display: "flex", justifyContent: "center" }}>
+            <Grid item mb={2}>
+              <DialogContentText>{photoInfo}</DialogContentText>
+            </Grid>
+            <Grid item>
+              <Image
+                src={photo?.img_src as string}
+                alt={photoTitle}
+                loading="lazy"
+                width={500}
+                height={500}
+                loader={imageLoader}
+                placeholder="blur"
+                blurDataURL="/nasa.svg"
+              />
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button
@@ -73,12 +81,12 @@ const PhotoDetails: FC<PhotoDetailsProps> = ({ photo, open, handleClose }) => {
           >
             {`${isInFav ? "remove from" : "save on"} favorites`}
             {isInFav ? (
-              <DeleteIcon sx={{ color: "black" }} />
+              <DeleteIcon color="error" />
             ) : (
               <StarIcon sx={{ color: "gold" }} />
             )}
           </Button>
-          <Button onClick={() => handleClose()} autoFocus>
+          <Button onClick={() => handleClose(false)} autoFocus>
             Close
           </Button>
         </DialogActions>

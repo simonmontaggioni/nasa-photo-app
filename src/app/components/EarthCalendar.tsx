@@ -14,10 +14,6 @@ const EarthCalendar: FC<EarthCalendarProps> = ({ earthDate, setEarthDate }) => {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <DateCalendar
-          sx={{
-            width: "300px",
-            height: "300px",
-          }}
           value={earthDate}
           onChange={(newValue) => setEarthDate(newValue)}
           disableFuture
