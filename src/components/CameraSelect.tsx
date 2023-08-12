@@ -4,7 +4,7 @@ import { Camera, CameraName, Rover } from "../interfaces/mainInterfaces";
 
 interface CameraSelectProps {
   rovers: Rover[];
-  selectedRover: string;
+  selectedRover: Rover;
   camera: CameraName;
   setCamera: React.Dispatch<React.SetStateAction<CameraName>>;
   disabled: boolean;
@@ -28,13 +28,11 @@ const CameraSelect: FC<CameraSelectProps> = ({
         onChange={(e) => setCamera(e.target.value as CameraName)}
         disabled={disabled}
       >
-        {rovers
-          .filter((rover: Rover) => rover.name === selectedRover)[0]
-          .cameras.map((camera: Camera) => (
-            <MenuItem key={camera.name} value={camera.name}>
-              {camera.full_name}
-            </MenuItem>
-          ))}
+        {selectedRover.cameras.map((camera: Camera) => (
+          <MenuItem key={camera.name} value={camera.name}>
+            {camera.full_name}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

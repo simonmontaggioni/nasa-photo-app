@@ -11,8 +11,11 @@ import CameraSelect from "./CameraSelect";
 import DateTypeSelect from "./DateTypeSelect";
 import EarthCalendar from "./EarthCalendar";
 import MartianCalendar from "./MartianCalendar";
-import { RequestPhotosParams, RoverName } from "../interfaces/mainInterfaces";
-import { useRouter } from "next/router";
+import {
+  RequestPhotosParams,
+  Rover,
+  RoverName,
+} from "../interfaces/mainInterfaces";
 import styles from "../app/page.module.css";
 
 const RoverFormStyles = {
@@ -44,21 +47,18 @@ const RoverForm: FC<RoverFormProps> = ({
   showRoverForm,
   requestPhotos,
 }) => {
-  const [selectedRover, setSelectedRover] = useState(ROVERS[0].name);
-  const [camera, setCamera] = useState(
-    ROVERS.filter((rover) => rover.name === selectedRover)[0].cameras[0].name
-  );
+  const [selectedRover, setSelectedRover] = useState<Rover>(ROVERS[0]);
+  const [camera, setCamera] = useState(ROVERS[0].cameras[0].name);
   const [dateType, setDateType] = useState<"earth" | "sol">("earth");
   const [earthDate, setEarthDate] = useState<Dayjs | null>(dayjs());
   const [martianSol, setMartianSol] = useState<number>(0);
 
   const mediaSize = useGetMediaSize();
 
-  const handleChangeSelectedRover = (newRover: RoverName) => {
+  const handleChangeSelectedRover = (newRover: Rover) => {
+    console.info(newRover);
     setSelectedRover(newRover);
-    setCamera(
-      ROVERS.filter((rover) => rover.name === newRover)[0].cameras[0].name
-    );
+    setCamera(newRover.cameras[0].name);
   };
 
   const opacityValue = showRoverForm ? 1 : 0;
@@ -131,7 +131,7 @@ const RoverForm: FC<RoverFormProps> = ({
               }
               onClick={() =>
                 requestPhotos({
-                  rover: selectedRover,
+                  rover: selectedRover.name,
                   camera,
                   dateType: dateType,
                   date: dateType === "earth" ? earthDate : martianSol,

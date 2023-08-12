@@ -17,8 +17,8 @@ const RoverSelectStyles = {
 
 interface RoverSelectProps {
   rovers: Rover[];
-  selectedRover: RoverName;
-  setSelectedRover: (newRover: RoverName) => void;
+  selectedRover: Rover;
+  setSelectedRover: (newRover: Rover) => void;
   disabled: boolean;
 }
 const RoverSelect: FC<RoverSelectProps> = ({
@@ -27,6 +27,10 @@ const RoverSelect: FC<RoverSelectProps> = ({
   setSelectedRover,
   disabled,
 }) => {
+  const handleChangeRover = (newRoverName: RoverName) => {
+    const newRover = rovers.find((rover: Rover) => rover.name === newRoverName);
+    setSelectedRover(newRover as Rover);
+  };
   return (
     <Grid item xs={12} mb={2} style={RoverSelectStyles.container}>
       <FormControl sx={RoverSelectStyles.formControl}>
@@ -34,9 +38,9 @@ const RoverSelect: FC<RoverSelectProps> = ({
         <Select
           labelId="rover-select-label"
           id="rover-select"
-          value={selectedRover}
+          value={selectedRover.name}
           label="rover"
-          onChange={(e) => setSelectedRover(e.target.value as RoverName)}
+          onChange={(e) => handleChangeRover(e.target.value as RoverName)}
           fullWidth
           disabled={disabled}
         >
@@ -48,8 +52,8 @@ const RoverSelect: FC<RoverSelectProps> = ({
         </Select>
       </FormControl>
       <Avatar
-        src={`/${selectedRover}.jpeg`}
-        alt={selectedRover}
+        src={`/${selectedRover.name}.jpeg`}
+        alt={selectedRover.name}
         sx={RoverSelectStyles.avatar}
       ></Avatar>
     </Grid>

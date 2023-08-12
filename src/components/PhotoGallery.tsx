@@ -1,5 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { Button, Stack, Paper, ImageList } from "@mui/material";
+import {
+  Button,
+  Stack,
+  Paper,
+  ImageList,
+  Backdrop,
+  CircularProgress,
+} from "@mui/material";
 import { useGetMediaSize } from "../hooks/useGetMediaSize";
 import { Photo, RequestPhotosParams } from "../interfaces/mainInterfaces";
 import PhotoCard from "./PhotoCard";
@@ -94,7 +101,7 @@ const PhotoGallery: FC<PhotoGalleryProps> = ({
         sx={PhotoGalleryStyles.imageList}
       >
         {photosData.map((photo) => (
-          <PhotoCard key={photo.id} photo={photo} />
+          <PhotoCard key={photo.id} photo={photo} ref={ref} />
         ))}
       </ImageList>
       <Stack
@@ -110,6 +117,12 @@ const PhotoGallery: FC<PhotoGalleryProps> = ({
           {loading ? "loading more photos" : "Change Filters"}
         </Button>
       </Stack>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="warning" />
+      </Backdrop>
     </Paper>
   );
 };

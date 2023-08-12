@@ -1,6 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, forwardRef, useState } from "react";
 import Image from "next/image";
-import { IconButton, ImageListItem, ImageListItemBar } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  ImageListItem,
+  ImageListItemBar,
+} from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import PhotoDetails from "./PhotoDetail";
 import { Photo } from "../interfaces/mainInterfaces";
@@ -10,7 +15,7 @@ interface PhotoCardProps {
   photo: Photo;
 }
 
-const PhotoCard: FC<PhotoCardProps> = ({ photo }) => {
+const PhotoCardBase: FC<PhotoCardProps> = ({ photo }) => {
   const [open, setOpen] = useState(false);
 
   const isInFav = !!handleFavorite.isInFavorites(photo as Photo);
@@ -43,4 +48,13 @@ const PhotoCard: FC<PhotoCardProps> = ({ photo }) => {
   );
 };
 
+const PhotoCard = forwardRef((props: PhotoCardProps, ref) => {
+  const { photo } = props as PhotoCardProps;
+  return (
+    <Box ref={ref}>
+      <PhotoCardBase photo={photo} />
+    </Box>
+  );
+});
+PhotoCard.displayName = "PhotoCard";
 export default PhotoCard;

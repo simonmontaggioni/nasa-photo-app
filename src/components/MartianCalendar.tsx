@@ -20,7 +20,7 @@ const MartianCalendar: FC<MartianCalendarProps> = ({
         InputLabelProps={{
           shrink: true,
         }}
-        value={martianSol}
+        value={martianSol < 0 ? 0 : martianSol}
         onChange={(e) => setMartianSol(Number(e.target.value))}
         inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
         disabled={disabled}
