@@ -7,6 +7,7 @@ interface CameraSelectProps {
   selectedRover: string;
   camera: CameraName;
   setCamera: React.Dispatch<React.SetStateAction<CameraName>>;
+  disabled: boolean;
 }
 
 const CameraSelect: FC<CameraSelectProps> = ({
@@ -14,6 +15,7 @@ const CameraSelect: FC<CameraSelectProps> = ({
   selectedRover,
   setCamera,
   camera,
+  disabled,
 }) => {
   return (
     <FormControl sx={{ m: 1, minWidth: 300, maxWidth: "100%" }}>
@@ -24,6 +26,7 @@ const CameraSelect: FC<CameraSelectProps> = ({
         value={camera}
         label="camera"
         onChange={(e) => setCamera(e.target.value as CameraName)}
+        disabled={disabled}
       >
         {rovers
           .filter((rover: Rover) => rover.name === selectedRover)[0]

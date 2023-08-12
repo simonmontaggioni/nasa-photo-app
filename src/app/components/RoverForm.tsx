@@ -77,6 +77,7 @@ const RoverForm: FC<RoverFormProps> = ({
           rovers={ROVERS.filter((rover) => rover.name !== "Perseverance")}
           selectedRover={selectedRover}
           setSelectedRover={handleChangeSelectedRover}
+          disabled={loading}
         />
         <Grid container item xs={12} sx={{ justifyContent: "space-between" }}>
           {["sm2", "md", "lg", "xl"].includes(mediaSize) && (
@@ -95,25 +96,29 @@ const RoverForm: FC<RoverFormProps> = ({
                 selectedRover={selectedRover}
                 camera={camera}
                 setCamera={setCamera}
+                disabled={loading}
               />
               <DateTypeSelect dateType={dateType} setDateType={setDateType} />
               {dateType === "earth" ? (
                 <EarthCalendar
                   earthDate={earthDate}
                   setEarthDate={setEarthDate}
+                  disabled={loading}
                 />
               ) : (
                 <MartianCalendar
                   martianSol={martianSol}
                   setMartianSol={setMartianSol}
+                  disabled={loading}
                 />
               )}
             </Stack>
             <Button
               variant="contained"
+              color="warning"
               endIcon={
                 loading ? (
-                  <CircularProgress color="inherit" size={20} />
+                  <CircularProgress color="warning" size={20} />
                 ) : (
                   <SendIcon />
                 )
@@ -127,6 +132,7 @@ const RoverForm: FC<RoverFormProps> = ({
                   page: 1,
                 })
               }
+              disabled={loading}
             >
               {loading ? "loading" : "search"}
             </Button>

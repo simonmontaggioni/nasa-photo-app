@@ -4,10 +4,12 @@ import { FormControl, TextField } from "@mui/material";
 interface MartianCalendarProps {
   martianSol: number;
   setMartianSol: React.Dispatch<React.SetStateAction<number>>;
+  disabled: boolean;
 }
 const MartianCalendar: FC<MartianCalendarProps> = ({
   martianSol,
   setMartianSol,
+  disabled,
 }) => {
   return (
     <FormControl sx={{ m: 1, minHeight: 300, minWidth: 300, maxWidth: "100%" }}>
@@ -21,6 +23,7 @@ const MartianCalendar: FC<MartianCalendarProps> = ({
         value={martianSol}
         onChange={(e) => setMartianSol(Number(e.target.value))}
         inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+        disabled={disabled}
       />
     </FormControl>
   );

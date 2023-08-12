@@ -8,8 +8,13 @@ import { Dayjs } from "dayjs";
 interface EarthCalendarProps {
   earthDate: Dayjs | null;
   setEarthDate: React.Dispatch<React.SetStateAction<Dayjs | null>>;
+  disabled: boolean;
 }
-const EarthCalendar: FC<EarthCalendarProps> = ({ earthDate, setEarthDate }) => {
+const EarthCalendar: FC<EarthCalendarProps> = ({
+  earthDate,
+  setEarthDate,
+  disabled,
+}) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -17,6 +22,7 @@ const EarthCalendar: FC<EarthCalendarProps> = ({ earthDate, setEarthDate }) => {
           value={earthDate}
           onChange={(newValue) => setEarthDate(newValue)}
           disableFuture
+          disabled={disabled}
         />
       </Box>
     </LocalizationProvider>

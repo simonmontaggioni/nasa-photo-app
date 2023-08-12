@@ -19,11 +19,13 @@ interface RoverSelectProps {
   rovers: Rover[];
   selectedRover: RoverName;
   setSelectedRover: (newRover: RoverName) => void;
+  disabled: boolean;
 }
 const RoverSelect: FC<RoverSelectProps> = ({
   rovers,
   selectedRover,
   setSelectedRover,
+  disabled,
 }) => {
   return (
     <Grid item xs={12} mb={2} style={RoverSelectStyles.container}>
@@ -36,6 +38,7 @@ const RoverSelect: FC<RoverSelectProps> = ({
           label="rover"
           onChange={(e) => setSelectedRover(e.target.value as RoverName)}
           fullWidth
+          disabled={disabled}
         >
           {rovers.map((rover) => (
             <MenuItem key={rover.name} value={rover.name}>

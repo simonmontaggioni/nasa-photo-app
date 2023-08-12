@@ -72,7 +72,12 @@ export default function RootLayout({
                 </Stack>
               </Link>
               <Link href={"/favorites"}>
-                <Typography variant="h6" color="white" component="div">
+                <Typography
+                  variant="h6"
+                  color="white"
+                  component="div"
+                  sx={{ textShadow: "2px 2px 2px black" }}
+                >
                   Favorites
                 </Typography>
               </Link>

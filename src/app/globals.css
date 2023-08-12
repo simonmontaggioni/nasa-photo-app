@@ -100,6 +100,9 @@ a {
   text-decoration: none;
 }
 
+.MuiDateCalendar-root .Mui-selected {
+  background-color: #e46c04 !important;
+}
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

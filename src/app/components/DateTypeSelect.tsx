@@ -5,8 +5,13 @@ import { DateType } from "../interfaces/mainInterfaces";
 interface DateTypeSelectProps {
   dateType: DateType;
   setDateType: React.Dispatch<React.SetStateAction<DateType>>;
+  disabled: boolean;
 }
-const DateTypeSelect: FC<DateTypeSelectProps> = ({ dateType, setDateType }) => {
+const DateTypeSelect: FC<DateTypeSelectProps> = ({
+  dateType,
+  setDateType,
+  disabled,
+}) => {
   return (
     <FormControl sx={{ m: 1, minWidth: 300, maxWidth: "100%" }}>
       <InputLabel id="camera-select-label">Date type</InputLabel>
@@ -16,6 +21,7 @@ const DateTypeSelect: FC<DateTypeSelectProps> = ({ dateType, setDateType }) => {
         value={dateType}
         label="dateType"
         onChange={(e) => setDateType(e.target.value as DateType)}
+        disabled={disabled}
       >
         <MenuItem value={"sol"}>Mars Sol</MenuItem>
         <MenuItem value={"earth"}>Earth date</MenuItem>

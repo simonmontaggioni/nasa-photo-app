@@ -76,6 +76,7 @@ const PhotoDetails: FC<PhotoDetailsProps> = ({ photo, open, handleClose }) => {
         <DialogActions>
           <Button
             variant={"outlined"}
+            color="error"
             onClick={() => handleSaveOnFavorites()}
             autoFocus
           >
