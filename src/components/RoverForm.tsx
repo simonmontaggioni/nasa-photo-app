@@ -3,19 +3,16 @@ import { Grid, Button, Stack, Paper, CircularProgress } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 import dayjs, { Dayjs } from "dayjs";
-import { ROVERS } from "../app/rovers";
-import { useGetMediaSize } from "../hooks/useGetMediaSize";
 import RoverSelect from "./RoverSelect";
 import RoverImageContainer from "./RoverImageContainer";
 import CameraSelect from "./CameraSelect";
 import DateTypeSelect from "./DateTypeSelect";
 import EarthCalendar from "./EarthCalendar";
 import MartianCalendar from "./MartianCalendar";
-import {
-  RequestPhotosParams,
-  Rover,
-  RoverName,
-} from "../interfaces/mainInterfaces";
+import { RequestPhotosParams, Rover } from "../interfaces/mainInterfaces";
+import { marsEarthDateConversions } from "@/utils/marsEarthDateConversions";
+import { useGetMediaSize } from "../hooks/useGetMediaSize";
+import { ROVERS } from "../app/rovers";
 import styles from "../app/page.module.css";
 
 const RoverFormStyles = {
@@ -44,7 +41,9 @@ const RoverForm: FC<RoverFormProps> = ({ loading, requestPhotos }) => {
   const [camera, setCamera] = useState(ROVERS[0].cameras[0].name);
   const [dateType, setDateType] = useState<"earth" | "sol">("earth");
   const [earthDate, setEarthDate] = useState<Dayjs | null>(dayjs());
-  const [martianSol, setMartianSol] = useState<number>(0);
+  const [martianSol, setMartianSol] = useState<number>(
+    marsEarthDateConversions.getMaxSol(ROVERS[0].landing_date)
+  );
 
   const mediaSize = useGetMediaSize();
 
@@ -95,9 +94,9 @@ const RoverForm: FC<RoverFormProps> = ({ loading, requestPhotos }) => {
                 />
               ) : (
                 <MartianCalendar
-                  martianSol={martianSol}
                   setMartianSol={setMartianSol}
                   disabled={loading}
+                  landingDate={selectedRover.landing_date}
                 />
               )}
             </Stack>
