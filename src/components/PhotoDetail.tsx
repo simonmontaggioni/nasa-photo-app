@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { ImageLoaderProps } from "next/image";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";

@@ -13,9 +13,7 @@ const MartianCalendar: FC<MartianCalendarProps> = ({
 }) => {
   const maxSol = marsEarthDateConversions.getMaxSol(landingDate);
 
-  const [value, setValue] = React.useState<
-    number | string | Array<number | string>
-  >(maxSol);
+  const [value, setValue] = React.useState<number | string>(maxSol);
 
   const marks = [
     {
@@ -40,7 +38,7 @@ const MartianCalendar: FC<MartianCalendarProps> = ({
     },
   ];
 
-  const handleSliderChange = (event: Event, newValue: number) => {
+  const handleSliderChange = (event: Event, newValue: any) => {
     setValue(newValue);
     setMartianSol(newValue);
   };
@@ -66,7 +64,6 @@ const MartianCalendar: FC<MartianCalendarProps> = ({
           style={{
             padding: "40px 0px 40px 10px",
             borderRadius: "4px",
-            // border: "1px solid #bab8b7",
           }}
         >
           <Grid container spacing={4} alignItems="center">
