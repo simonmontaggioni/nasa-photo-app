@@ -45,6 +45,7 @@ const MartianCalendar: FC<MartianCalendarProps> = ({
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value === "" ? "" : Number(event.target.value));
+    setMartianSol(Number(event.target.value));
   };
 
   const handleBlur = () => {
@@ -88,7 +89,7 @@ const MartianCalendar: FC<MartianCalendarProps> = ({
                 onChange={handleInputChange}
                 onBlur={handleBlur}
                 inputProps={{
-                  step: 10,
+                  step: 1,
                   min: 0,
                   max: maxSol,
                   type: "number",
