@@ -11,6 +11,7 @@ const isInFavorites = (photo: Photo): boolean => {
 };
 
 const toggleFavoriteFromLocalStorage = (photo: Photo): boolean => {
+  if (typeof window === "undefined") return false;
   let favorites: Photo[] = JSON.parse(
     localStorage.getItem("nasa_favorites_fotos") || "[]"
   );
@@ -30,6 +31,7 @@ const toggleFavoriteFromLocalStorage = (photo: Photo): boolean => {
 };
 
 const getFavorites = (): Photo[] => {
+  if (typeof window === "undefined") return [];
   let favorites: Photo[] = JSON.parse(
     localStorage.getItem("nasa_favorites_fotos") || "[]"
   );
