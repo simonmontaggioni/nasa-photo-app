@@ -38,8 +38,8 @@ const PhotoDetails: FC<PhotoDetailsProps> = ({ photo, open, handleClose }) => {
     setIsInFav(!!result);
   };
 
-  const imageLoader = ({ src }) => {
-    return `${src}`;
+  const imageLoader = (params: any) => {
+    return `${params.src}`;
   };
 
   const photoTitle = `Photo - ${photo?.id}`;
