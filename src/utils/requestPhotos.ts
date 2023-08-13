@@ -15,6 +15,10 @@ export const requestPhotos = async (params: RequestPhotosParams) => {
   }
 
   searchParams.append("page", String(page));
-  const URL = `http://localhost:3000/api/rovers/photos?${searchParams.toString()}`;
+
+  let origin = "http://localhost:3000";
+  if (typeof window !== "undefined") origin = window.location.origin;
+
+  const URL = `${origin}/api/rovers/photos?${searchParams.toString()}`;
   return fetch(URL);
 };
